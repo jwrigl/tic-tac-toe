@@ -33,10 +33,25 @@ const gameBoard = () => {
 
     }
 
+    const checkIfDraw = () => {
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] == '') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    const checkIfWon = () => {
+        return;
+    }
+
     return {
         newBoard,
         buildBoard,
         destroyBoard
+        checkIfWon,
+        checkIfDraw
     }
 };
 
