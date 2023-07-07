@@ -4,3 +4,8 @@
     border: 1px solid black;
     text-align: center;
 }
+
+#boardContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+}

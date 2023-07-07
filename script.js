@@ -1,5 +1,4 @@
 const gameBoard = () => {
-    debugger;
     let board = [
         '', '', '',
         '', '', '',
