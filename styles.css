@@ -8,4 +8,6 @@
 #boardContainer {
     display: grid;
     grid-template-columns: repeat(3, 100px);
+    align-items: center;
+    justify-content: center;
 }
