@@ -1,17 +1,18 @@
 const gameBoard = () => {
+    debugger;
     let board = [
         '', '', '',
         '', '', '',
         '', '', ''
       ];
-    function newBoard() {
+    const newBoard = () => {
         board = [
             '', '', '',
             '', '', '',
             '', '', ''
           ];
     }
-    function buildBoard(board) {
+    const buildBoard = () => {
         parentContainer = document.querySelector('#boardContainer');
         for (let i = 0; i < board.length; i++) {
             let cell = document.createElement('div');
@@ -21,7 +22,19 @@ const gameBoard = () => {
         }
 
     }
-    function destroyBoard(board) {
+    const destroyBoard = () => {
+        parentContainer = document.querySelector('#boardContainer');
+        for (let i = 0; i < board.length; i++) {
+            parentContainer.removeChild(board[i]);
+        }
 
     }
+
+    return {
+        newBoard,
+        buildBoard,
+        destroyBoard
+    }
 };
+
+const board = gameBoard();
