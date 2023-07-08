@@ -33,6 +33,26 @@ const gameBoard = () => {
 
     }
 
+    return {
+        newBoard,
+        buildBoard,
+        destroyBoard,
+        checkIfWon,
+        checkIfDraw
+    }
+};
+
+const board = gameBoard();
+
+const gameRules = () => {
+    const winCombos = (
+        (1, 2, 3), (4, 5, 6), (7, 8, 9),  //Rows
+        (1, 4, 7), (2, 5, 8), (3, 6, 9),  //Columns
+        (1, 5, 9), (3, 5, 7)              //Diagonals
+    )
+    const checkIfWon = () => {
+        return;
+    }
     const checkIfDraw = () => {
         for (let i = 0; i < board.length; i++) {
             if (board[i] == '') {
@@ -42,17 +62,9 @@ const gameBoard = () => {
         return true;
     }
 
-    const checkIfWon = () => {
-        return;
-    }
-
     return {
-        newBoard,
-        buildBoard,
-        destroyBoard
+        winCombos,
         checkIfWon,
         checkIfDraw
     }
-};
-
-const board = gameBoard();
+}
