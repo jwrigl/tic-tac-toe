@@ -37,8 +37,6 @@ const gameBoard = () => {
         newBoard,
         buildBoard,
         destroyBoard,
-        checkIfWon,
-        checkIfDraw
     }
 };
 
@@ -61,6 +59,13 @@ const gameRules = () => {
         }
         return true;
     }
+    const checkIfEmpty = (id) => {
+        if (board[id] == '') {
+            return true;
+        }
+        
+    }
+
 
     return {
         winCombos,
