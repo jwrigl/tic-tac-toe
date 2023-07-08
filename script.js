@@ -27,6 +27,7 @@ const gameBoard = () => {
 
             cell.addEventListener('click', () => {
                 const clickedCell = cell.id;
+                {currentPlayer === 'X' ? playMove(clickedCell, 'X') : playMove(clickedCell, 'O')}
 
                 
                 
@@ -110,7 +111,8 @@ const gameRules = () => {
     return {
         checkIfWon,
         checkIfDraw,
-        checkIfEmpty
+        checkIfEmpty,
+        switchPlayer
     }
 }
 
@@ -127,6 +129,7 @@ const player = (name, symbol) => {
     }
 
     return {
+        playMove,
         name,
         symbol
     }
