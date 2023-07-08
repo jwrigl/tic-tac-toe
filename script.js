@@ -16,6 +16,7 @@ const gameBoard = () => {
         }
     }
     const buildBoard = () => {
+        const {playMove} = gameRules();
         parentContainer = document.querySelector('#boardContainer');
         for (let i = 0; i < boardData.length; i++) {
             let cell = document.createElement('div');
@@ -23,6 +24,13 @@ const gameBoard = () => {
             cell.id = i;
             parentContainer.appendChild(cell);
             cell.innerText = boardData[i];
+
+            cell.addEventListener('click', () => {
+                const clickedCell = cell.id;
+
+                
+                
+            })
         }
 
     }
@@ -37,8 +45,6 @@ const gameBoard = () => {
         boardData[index] = playerChar;
         destroyBoard();
         buildBoard();
-
-        
     }
     return {
         resetBoardData,
@@ -97,3 +103,24 @@ const gameRules = () => {
         checkIfEmpty
     }
 }
+
+const player = (name, symbol) => {
+    const {checkIfWon, checkIfDraw, checkIfEmpty} = gameRules();
+    const {populatecell} = gameBoard();
+
+    const playMove = (id,symbol) => {
+        if (checkIfEmpty(id)) {
+            populatecell(id, symbol);
+            checkIfWon(symbol);
+            checkIfDraw();
+        }
+    }
+
+    return {
+        name,
+        symbol
+    }
+}
+
+const player1 = player('Player 1', 'X');
+const player2 = player('Player 2', 'O');
