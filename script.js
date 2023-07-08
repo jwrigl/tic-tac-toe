@@ -97,6 +97,16 @@ const gameRules = () => {
     }
     }
 
+    let currentPlayer = "X";
+
+    const switchPlayer = () => {
+        if (currentPlayer == "X") {
+            currentPlayer = "O";
+        } else {
+            currentPlayer = "X";
+        }
+    }
+
     return {
         checkIfWon,
         checkIfDraw,
