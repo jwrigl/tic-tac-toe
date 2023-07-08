@@ -4,7 +4,7 @@ const gameBoard = () => {
         '', '', '',
         '', '', ''
       ];
-    const newBoard = () => {
+    const resetBoardData = () => {
         boardData = [
             '', '', '',
             '', '', '',
@@ -29,15 +29,22 @@ const gameBoard = () => {
     const destroyBoard = () => {
         parentContainer = document.querySelector('#boardContainer');
         for (let i = 0; i < boardData.length; i++) {
-            parentContainer.removeChild(boardData[i]);
+            parentContainer.removeChild(parentContainer.firstChild);
         }
-
     }
 
+    const populatecell = (index, playerChar) => {
+        boardData[index] = playerChar;
+        destroyBoard();
+        buildBoard();
+
+        
+    }
     return {
-        newBoard,
+        resetBoardData,
         buildBoard,
         destroyBoard,
+        populatecell,
         boardData
     }
 };
@@ -62,20 +69,13 @@ const gameRules = () => {
         }
         for (let i = 0; i < winCombos.length; i++) {
             const [a, b, c] = winCombos[i];
-            if (occupiedIndexes.includes(a) && occupiedIndexes.includes(b) && occupiedIndexes.includes(c)) {
+            if (occupiedIndexes.includes(a) && occupiedIndexes.includes(b) 
+                && occupiedIndexes.includes(c)) {
+
                 return true;
             }
         }
         return;
-    }
-
-    const checkIfDraw = () => {
-        for (let i = 0; i < board.length; i++) {
-            if (board[i] == '') {
-                return false;
-            }
-        }
-        return true;
     }
 
     const checkIfEmpty = (id) => {
@@ -85,8 +85,11 @@ const gameRules = () => {
         return false;
     }
 
-
-
+    const checkIfDraw = () => {
+        for (let i = 0; i < board.length; i++) {
+            checkIfEmpty(i);
+    }
+    }
 
     return {
         checkIfWon,
