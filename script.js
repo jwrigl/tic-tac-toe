@@ -50,8 +50,22 @@ const gameRules = () => {
         (1, 4, 7), (2, 5, 8), (3, 6, 9),  //Columns
         (1, 5, 9), (3, 5, 7)              //Diagonals
     )
+    const {boardData} = gameBoard();
 
-    const checkIfWon = () => {
+    const checkIfWon = (playerChar) => {
+        let occupiedIndexes = [];
+        for (i=0; i<boardData.length; i++) {
+            if (boardData[i] == playerChar) {
+                occupiedIndexes.push(i);
+            }
+
+        }
+        for (let i = 0; i < winCombos.length; i++) {
+            const [a, b, c] = winCombos[i];
+            if (occupiedIndexes.includes(a) && occupiedIndexes.includes(b) && occupiedIndexes.includes(c)) {
+                return true;
+            }
+        }
         return;
     }
 
@@ -65,9 +79,10 @@ const gameRules = () => {
     }
 
     const checkIfEmpty = (id) => {
-        if (board[id] == '') {
+        if (boardData[id] == '') {
             return true;
         }
+        return false;
     }
 
 
