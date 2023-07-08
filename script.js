@@ -17,7 +17,7 @@ const gameBoard = () => {
     }
     const buildBoard = () => {
         const {playMove} = gameRules();
-        parentContainer = document.querySelector('#boardContainer');
+        const parentContainer = document.querySelector('#boardContainer');
         for (let i = 0; i < boardData.length; i++) {
             let cell = document.createElement('div');
             cell.classList.add('cell');
@@ -27,6 +27,7 @@ const gameBoard = () => {
 
             cell.addEventListener('click', () => {
                 const clickedCell = cell.id;
+                const {currentPlayer, playMove} = player();
                 {currentPlayer === 'X' ? playMove(clickedCell, 'X') : playMove(clickedCell, 'O')}
 
                 
@@ -126,6 +127,9 @@ const player = (name, symbol) => {
             checkIfWon(symbol);
             checkIfDraw();
         }
+        else {
+            console.log("Selected cell is already occupied");
+        }
     }
 
     return {
@@ -134,6 +138,8 @@ const player = (name, symbol) => {
         symbol
     }
 }
+
+board.buildBoard()
 
 const player1 = player('Player 1', 'X');
 const player2 = player('Player 2', 'O');
