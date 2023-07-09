@@ -7,7 +7,10 @@ function gameBoard() {
     return {
         boardData: ["", "", "", "", "", "", "", "", ""],
         resetBoardData: function () {
-            this.boardData = ["", "", "", "", "", "", "", "", ""];
+            this.boardData = ["", "", "", "", "", "", "", "", ""]
+        },
+        changeBoardData: function (index, value) {
+            this.boardData[index] = value;
         }
 
     }
