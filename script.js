@@ -52,6 +52,11 @@ const gameLogic = (() => {
                 }
             }
             return false;
+        },
+        checkIfDraw: function () {
+            if (board.boardData.includes("")) {
+                return false;
+            }
         }
     }
 
