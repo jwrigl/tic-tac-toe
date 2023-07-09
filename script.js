@@ -1,6 +1,4 @@
-const player = () => {
-    //player factory function
-}
+
 
 function gameBoard() {
     //gameboard factory function
@@ -16,8 +14,29 @@ function gameBoard() {
     }
 }
 
+const board = gameBoard();
 
-const gameLogic = () => {
+const gameLogic = (() => {
     //Not a factory function
+    return {
+        checkIfEmpty: function (index) {
+            if (board.boardData[index] === "") {
+                return true;
+            }
+        }
 
+
+
+    }
+
+
+})();
+
+const player = (symbol) => {
+    //player factory function
+    return {
+        playMove: function (index) {
+            board.changeBoardData(index, symbol);
+        }
+    }
 }
