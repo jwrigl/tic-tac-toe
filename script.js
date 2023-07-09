@@ -4,6 +4,10 @@ const gameBoard = () => {
         '', '', '',
         '', '', ''
       ];
+
+    const getBoardData = () => {
+        return boardData;
+    }
     const resetBoardData = () => {
         boardData = [
             '', '', '',
@@ -44,30 +48,38 @@ const gameBoard = () => {
     }
 
     const populatecell = (index, playerChar) => {
+        //maybe cut this down to just one line
         boardData[index] = playerChar;
         destroyBoard();
         buildBoard();
     }
+
+
+    const populateList = (index,symbol) => {
+        boardData[index] = symbol;
+        
+    }
     return {
+        getBoardData,
         resetBoardData,
         buildBoard,
         destroyBoard,
         populatecell,
-        boardData
+        populateList
     }
 };
 
-const board = gameBoard();
-
+//replace with a static class / enum
 const gameRules = () => {
     const winCombos = (
         (1, 2, 3), (4, 5, 6), (7, 8, 9),  //Rows
         (1, 4, 7), (2, 5, 8), (3, 6, 9),  //Columns
         (1, 5, 9), (3, 5, 7)              //Diagonals
     )
-    const {boardData} = gameBoard();
+    const {getBoardData} = gameBoard();
 
     const checkIfWon = (playerChar) => {
+        boardData = getBoardData();
         let occupiedIndexes = [];
         for (i=0; i<boardData.length; i++) {
             if (boardData[i] == playerChar) {
@@ -87,6 +99,7 @@ const gameRules = () => {
     }
 
     const checkIfEmpty = (id) => {
+        boardData = getBoardData();
         if (boardData[id] == '') {
             return true;
         }
@@ -94,7 +107,8 @@ const gameRules = () => {
     }
 
     const checkIfDraw = () => {
-        for (let i = 0; i < board.length; i++) {
+        boardData = getBoardData();
+        for (let i = 0; i < boardData.length; i++) {
             checkIfEmpty(i);
     }
     }
@@ -104,8 +118,10 @@ const gameRules = () => {
     const switchPlayer = () => {
         if (currentPlayer == "X") {
             currentPlayer = "O";
+            return currentPlayer;
         } else {
             currentPlayer = "X";
+            return currentPlayer;
         }
     }
 
@@ -117,12 +133,15 @@ const gameRules = () => {
     }
 }
 
-const player = (name, symbol) => {
-    const {checkIfWon, checkIfDraw, checkIfEmpty} = gameRules();
-    const {populatecell} = gameBoard();
+//am i making multiple instances of gameBoard?
+const player = (name, symbol, board) => {
 
-    const playMove = (id,symbol) => {
-        if (checkIfEmpty(id)) {
+
+    const playMove = (id,symbol,board) => {
+        //move into gameRules as this insn't a player exclusive action 
+        //try move function
+        if (checkIfEmpty(id, board)) {
+            populateList()
             populatecell(id, symbol);
             checkIfWon(symbol);
             checkIfDraw();
@@ -139,7 +158,10 @@ const player = (name, symbol) => {
     }
 }
 
-board.buildBoard()
+const board = gameBoard();
+const rules = gameRules();
 
-const player1 = player('Player 1', 'X');
-const player2 = player('Player 2', 'O');
+board.buildBoard() //listeners now running
+
+const player1 = player('Player 1', 'X', board);
+const player2 = player('Player 2', 'O', board);
