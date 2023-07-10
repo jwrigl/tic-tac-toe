@@ -18,18 +18,27 @@
                 this.boardData = ["", "", "", "", "", "", "", "", ""]
             },
             changeBoardData: function (index, value) {
-                this.boardData[index] = value;
-            },
+                console.log(index)
+                if(value === "X" || value === "O") {
+                    this.boardData[index] = value;
+            }
+            else {
+                console.log("Invalid symbol");
+            }},
             buildBoard: function () {
-                for (let i = 0; i < boardData.length; i++) {
+                for (let i = 0; i < this.boardData.length; i++) {
                 let cell = document.createElement('div');
                 cell.classList.add('cell');
                 cell.id = i;
                 parentContainer.appendChild(cell);
-                cell.innerText = boardData[i];
+                cell.innerText = this.boardData[i];
     
                 cell.addEventListener('click', () => {
-                    const clickedCell = cell.id;
+                    let clickedCell = Number(cell.id);
+                    gameLogic.getCurrentPlayer().playMove(clickedCell);
+                    cell.innerText = this.boardData[clickedCell];
+                    console.log(board.boardData)
+
 
     
                     
@@ -44,7 +53,7 @@
     const board = gameBoard();
     //board drawn and listeners started
     board.buildBoard();
-    
+
     const gameLogic = (() => {
         //Not a factory function
         const winCombos = [
@@ -93,6 +102,9 @@
                 currentPlayerIndex = (currentPlayerIndex + 1) % symbols.length;
             },
             getCurrentPlayer: function () {
+                return currentPlayerIndex === "O" ? playerX : playerO;
+            },
+            getCurrentSymbol: function () {
                 return symbols[currentPlayerIndex];
             }
         }
@@ -100,13 +112,12 @@
 
     })();
 
-    const player = (symbol) => {
+    const player = () => {
         //player factory function
         return {
-            playMove: function () {
-                let index = prompt("Pick a square");
-                board.changeBoardData(index, symbol);
-                gameLogic.checkIfWon(symbol);
+            playMove: function (index) {
+                board.changeBoardData(index, gameLogic.getCurrentSymbol());
+                gameLogic.checkIfWon(gameLogic.getCurrentSymbol());
                 gameLogic.checkIfDraw();
                 //might need to put something here if someone wins 
                 gameLogic.changePlayer();
@@ -114,6 +125,6 @@
         }
     }
 
-    player1 = player("X");
-    player2 = player("O");
+    playerX = player("X");
+    playerO = player("O");
 
