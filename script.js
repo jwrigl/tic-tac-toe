@@ -2,6 +2,7 @@
 
 function gameBoard() {
     //gameboard factory function
+    //i could just put the symbols in here and have a function to alternate between them when player moves
     return {
         boardData: ["", "", "", "", "", "", "", "", ""],
         resetBoardData: function () {
@@ -9,8 +10,7 @@ function gameBoard() {
         },
         changeBoardData: function (index, value) {
             this.boardData[index] = value;
-        }
-
+        },
     }
 }
 
@@ -30,6 +30,8 @@ const gameLogic = (() => {
         [1, 5, 9], // Diagonals
         [3, 5, 7]
       ];
+      const symbols = ["X", "O"];
+      const currentPlayerIndex = [0]
     return {
         checkIfEmpty: function (index) {
             if (board.boardData[index] === "") {
@@ -57,6 +59,12 @@ const gameLogic = (() => {
             if (board.boardData.includes("")) {
                 return false;
             }
+        },
+        changePlayer: function () {
+            currentPlayerIndex = (currentPlayerIndex + 1) % symbols.length;
+        },
+        getCurrentPlayer: function () {
+            return symbols[currentPlayerIndex];
         }
     }
 
@@ -68,6 +76,26 @@ const player = (symbol) => {
     return {
         playMove: function (index) {
             board.changeBoardData(index, symbol);
+            gameLogic.checkIfWon(symbol);
+            gameLogic.checkIfDraw();
+            //might need to put something here if someone wins 
+            gameLogic.changePlayer();
         }
     }
+}
+
+player1 = player("X");
+player2 = player("O");
+
+while (gameLogic.checkIfDraw() === false && gameLogic.checkIfWon(player1) === false && gameLogic.checkIfWon(player2) === false) {
+    player1.playMove();
+    player2.playMove();
+    player1.playMove();
+    player2.playMove();
+    player1.playMove();
+    player2.playMove();
+    player1.playMove();
+    player2.playMove();
+    player1.playMove();
+    player2.playMove();
 }
