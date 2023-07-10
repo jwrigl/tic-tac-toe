@@ -46,6 +46,8 @@
                 cells.forEach(cell => {
                     cell.removeEventListener('click', userClickListener);
                 })
+                const winMsgContainer = document.querySelector('#winMsgContainer');
+                winMsgContainer.innerText = "Player " + gameLogic.getCurrentSymbol() + " has won!";
             }
         }
     }
