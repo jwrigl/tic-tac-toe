@@ -12,6 +12,11 @@
         //gameboard factory function
         //i could just put the symbols in here and have a function to alternate between them when player moves
         const parentContainer = document.querySelector('#boardContainer');
+        function userClickListener() {
+            let clickedCell = Number(this.id);
+            gameLogic.getCurrentPlayer().playMove(clickedCell);
+            this.innerText = gameLogic.getCurrentSymbol();
+        }
         return {
             boardData: ["", "", "", "", "", "", "", "", ""],
             resetBoardData: function () {
@@ -33,17 +38,15 @@
                 parentContainer.appendChild(cell);
                 cell.innerText = this.boardData[i];
     
-                cell.addEventListener('click', () => {
-                    let clickedCell = Number(cell.id);
-                    gameLogic.getCurrentPlayer().playMove(clickedCell);
-                    cell.innerText = this.boardData[clickedCell];
-                    console.log(board.boardData);
+                cell.addEventListener('click', userClickListener);
+            }},
+            handleWin: function () {
+                console.log("Player "+gameLogic.getCurrentSymbol()+" has won!");
+                const cells = document.querySelectorAll('.cell');
+                cells.forEach(cell => {
+                    cell.removeEventListener('click', userClickListener);
                 })
             }
-        },
-        handleWin: function () {
-            console.log("Player "+gameLogic.getCurrentSymbol()+" has won!");
-        }
         }
     }
     //board instance created
