@@ -37,15 +37,12 @@
                     let clickedCell = Number(cell.id);
                     gameLogic.getCurrentPlayer().playMove(clickedCell);
                     cell.innerText = this.boardData[clickedCell];
-                    console.log(board.boardData)
-
-
-    
-                    
-                    
+                    console.log(board.boardData);
                 })
             }
-    
+        },
+        handleWin: function () {
+            console.log("Player "+gameLogic.getCurrentSymbol()+" has won!");
         }
         }
     }
@@ -119,13 +116,16 @@
             playMove: function (index) {
                 board.changeBoardData(index, gameLogic.getCurrentSymbol());
                 won = gameLogic.checkIfWon(gameLogic.getCurrentSymbol());
-                console.log(won);
+                if (won) {
+                    board.handleWin();
+                }
                 gameLogic.checkIfDraw();
                 //might need to put something here if someone wins 
                 gameLogic.changePlayer();
             }
         }
     }
+
 
     playerX = player("X");
     playerO = player("O");
