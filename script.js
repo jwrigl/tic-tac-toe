@@ -1,4 +1,12 @@
-
+/*KEY PROCESSES IN TIC TAC TOE
+Player makes a move:
+Is the square empty?
+What symbol do they have?
+Has the game been won?
+Has the game been drawn?
+Switch player
+repeat
+*/
 
 function gameBoard() {
     //gameboard factory function
@@ -74,7 +82,8 @@ const gameLogic = (() => {
 const player = (symbol) => {
     //player factory function
     return {
-        playMove: function (index) {
+        playMove: function () {
+            let index = prompt("Pick a square");
             board.changeBoardData(index, symbol);
             gameLogic.checkIfWon(symbol);
             gameLogic.checkIfDraw();
@@ -97,5 +106,6 @@ while (gameLogic.checkIfDraw() === false && gameLogic.checkIfWon(player1) === fa
     player1.playMove();
     player2.playMove();
     player1.playMove();
-    player2.playMove();
+    player2.playMove()
 }
+console.log("a player has won");
