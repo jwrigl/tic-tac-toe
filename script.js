@@ -11,6 +11,7 @@
     function gameBoard() {
         //gameboard factory function
         //i could just put the symbols in here and have a function to alternate between them when player moves
+        const parentContainer = document.querySelector('#boardContainer');
         return {
             boardData: ["", "", "", "", "", "", "", "", ""],
             resetBoardData: function () {
@@ -19,11 +20,31 @@
             changeBoardData: function (index, value) {
                 this.boardData[index] = value;
             },
+            buildBoard: function () {
+                for (let i = 0; i < boardData.length; i++) {
+                let cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.id = i;
+                parentContainer.appendChild(cell);
+                cell.innerText = boardData[i];
+    
+                cell.addEventListener('click', () => {
+                    const clickedCell = cell.id;
+
+    
+                    
+                    
+                })
+            }
+    
+        }
         }
     }
-
+    //board instance created
     const board = gameBoard();
-
+    //board drawn and listeners started
+    board.buildBoard();
+    
     const gameLogic = (() => {
         //Not a factory function
         const winCombos = [
