@@ -80,8 +80,9 @@
                 let occupiedIndexes = [];
                 for (i=0; i<board.boardData.length; i++) {
                     if (board.boardData[i] == playerChar) {
-                        occupiedIndexes.push(i);
+                        occupiedIndexes.push(i+1);
                     }
+                console.log(occupiedIndexes);
         
                 }
                 for (let i = 0; i < winCombos.length; i++) {
@@ -117,7 +118,8 @@
         return {
             playMove: function (index) {
                 board.changeBoardData(index, gameLogic.getCurrentSymbol());
-                gameLogic.checkIfWon(gameLogic.getCurrentSymbol());
+                won = gameLogic.checkIfWon(gameLogic.getCurrentSymbol());
+                console.log(won);
                 gameLogic.checkIfDraw();
                 //might need to put something here if someone wins 
                 gameLogic.changePlayer();
