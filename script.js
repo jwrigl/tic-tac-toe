@@ -8,7 +8,7 @@ Switch player
 repeat
 */
 
-function gameBoard() {
+function gameBoard(player1,player2) {
     //gameboard factory function
     //i could just put the symbols in here and have a function to alternate between them when player moves
     const parentContainer = document.querySelector('#boardContainer');
@@ -18,6 +18,8 @@ function gameBoard() {
         this.innerText = gameLogic.getCurrentSymbol();
     }
     return {
+        player1: player1,
+        player2: player2,
         boardData: ["", "", "", "", "", "", "", "", ""],
         resetBoardData: function () {
             this.boardData = ["", "", "", "", "", "", "", "", ""]
@@ -51,10 +53,7 @@ function gameBoard() {
         }
     }
 }
-//board instance created
-const board = gameBoard();
-//board drawn and listeners started
-board.buildBoard();
+
 
 const gameLogic = (() => {
     //Not a factory function
@@ -71,7 +70,7 @@ const gameLogic = (() => {
         [3, 5, 7]
     ];
     const symbols = ["X", "O"];
-    let currentPlayerIndex = [0]
+    let currentPlayerIndex = 0;
     return {
         checkIfEmpty: function (index) {
             if (board.boardData[index] === "") {
@@ -104,12 +103,12 @@ const gameLogic = (() => {
         changePlayer: function () {
             currentPlayerIndex = (currentPlayerIndex + 1) % symbols.length;
         },
-        getCurrentPlayer: function () {
-            return currentPlayerIndex === "O" ? playerX : playerO;
+        getCurrentPlayer: function () { // change this to either return just the index OOORRR have it accept 2 players as inputs and return only 1 
+            return currentPlayerIndex === 0 ? gameBoard.player1 : gameBoard.player2;
         },
         getCurrentSymbol: function () {
             return symbols[currentPlayerIndex];
-        }
+        },
     }
 
 
@@ -131,7 +130,12 @@ const player = () => {
     }
 }
 
+//board instance created
+const board = gameBoard(player(), player());
+//board drawn and listeners started
+board.buildBoard();
 
-playerX = player("X");
-playerO = player("O");
+//pass players into start function and save them with  this.player1 = player1 in gameBoard
+//board.startNewGame(player1, player2)
 
+//remove list in currentplayerindex 
