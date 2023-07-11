@@ -10,18 +10,11 @@ repeat
 
 function gameBoard(player1,player2) {
     //gameboard factory function
-    //i could just put the symbols in here and have a function to alternate between them when player moves
+    //'this' refers to the window object in this function
     const parentContainer = document.querySelector('#boardContainer');
-    const objectReference = this;
-    console.log("gameboard"+objectReference);
-    const userClickListener = (e) => {
-        let clickedCell = Number(e.target.id);
-        console.log(objectReference);
-        console.log(gameLogic.getCurrentPlayer(objectReference))
-        gameLogic.getCurrentPlayer(objectReference).playMove(clickedCell,objectReference);
-        e.target.innerText = gameLogic.getCurrentSymbol();
-    }
-    return {
+    //the function output is in this variable to take advantage of scope to pass the gameBoard object to 
+    //the userclicklistener
+    const gameBoardObject = {
         player1: player1,
         player2: player2,
         boardData: ["", "", "", "", "", "", "", "", ""],
@@ -56,6 +49,14 @@ function gameBoard(player1,player2) {
             winMsgContainer.innerText = "Player " + gameLogic.getCurrentSymbol() + " has won!";
         }
     }
+    const userClickListener = (e) => {
+        let clickedCell = Number(e.target.id);
+        console.log(gameBoardObject);
+        console.log(gameLogic.getCurrentPlayer(gameBoardObject))
+        gameLogic.getCurrentPlayer(gameBoardObject).playMove(clickedCell,gameBoardObject);
+        e.target.innerText = gameLogic.getCurrentSymbol();
+    }
+    return gameBoardObject;
 }
 
 //this should work fine and not break without global code
