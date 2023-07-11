@@ -14,6 +14,7 @@ function gameBoard(player1,player2) {
     const parentContainer = document.querySelector('#boardContainer');
     function userClickListener() {
         let clickedCell = Number(this.id);
+        console.log(gameLogic.getCurrentPlayer());
         gameLogic.getCurrentPlayer().playMove(clickedCell);
         this.innerText = gameLogic.getCurrentSymbol();
     }
@@ -104,7 +105,7 @@ const gameLogic = (() => {
             currentPlayerIndex = (currentPlayerIndex + 1) % symbols.length;
         },
         getCurrentPlayer: function () { // change this to either return just the index OOORRR have it accept 2 players as inputs and return only 1 
-            return currentPlayerIndex === 0 ? gameBoard.player1 : gameBoard.player2;
+            return currentPlayerIndex === 0 ? board.player1 : board.player2;
         },
         getCurrentSymbol: function () {
             return symbols[currentPlayerIndex];
@@ -139,3 +140,4 @@ board.buildBoard();
 //board.startNewGame(player1, player2)
 
 //remove list in currentplayerindex 
+console.log(board.player1);
