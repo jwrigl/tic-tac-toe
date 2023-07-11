@@ -46,6 +46,9 @@ function gameBoard(player1,player2) {
     }
     const userClickListener = (e) => {
         let clickedCell = Number(e.target.id);
+        if (!gameLogic.checkIfEmpty(e.target.id,board)) {
+            return;
+        }
         e.target.innerText = gameLogic.getCurrentSymbol(gameBoardObject);
         gameLogic.getCurrentPlayer(gameBoardObject).playMove(clickedCell,gameBoardObject);
     }
@@ -71,6 +74,7 @@ const gameLogic = (() => {
     return {
         checkIfEmpty: function (index,board) {
             if (board.boardData[index] === "") {
+                console.log("empty")
                 return true;
             }
             return false;
@@ -123,9 +127,7 @@ const player = (symbol) => {
         symbol: symbol,
         playMove: function (index,board) {
             console.log("player symbol: "+symbol);
-            if (!gameLogic.checkIfEmpty(index,board)) {
-                return;
-            }
+            console.log("still running")
             board.changeBoardData(index, symbol);
             let won = gameLogic.checkIfWon(symbol,board);
             if (won) {
