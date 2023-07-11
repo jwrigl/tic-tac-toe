@@ -79,6 +79,7 @@ const gameLogic = (() => {
             if (board.boardData[index] === "") {
                 return true;
             }
+            return false;
         },
         checkIfWon: function(playerChar,board) {
             let occupiedIndexes = [];
@@ -122,6 +123,9 @@ const player = (symbol) => {
     return {
         symbol: symbol,
         playMove: function (index,board) {
+            if (!gameLogic.checkIfEmpty(index,board)) {
+                return;
+            }
             board.changeBoardData(index, symbol);
             let won = gameLogic.checkIfWon(symbol,board);
             if (won) {
