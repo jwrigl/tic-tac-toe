@@ -12,11 +12,14 @@ function gameBoard(player1,player2) {
     //gameboard factory function
     //i could just put the symbols in here and have a function to alternate between them when player moves
     const parentContainer = document.querySelector('#boardContainer');
-    function userClickListener() {
-        let clickedCell = Number(this.id);
-        console.log(gameLogic.getCurrentPlayer());
-        gameLogic.getCurrentPlayer().playMove(clickedCell);
-        this.innerText = gameLogic.getCurrentSymbol();
+    const objectReference = this;
+    console.log("gameboard"+objectReference);
+    const userClickListener = (e) => {
+        let clickedCell = Number(e.target.id);
+        console.log(objectReference);
+        console.log(gameLogic.getCurrentPlayer(objectReference))
+        gameLogic.getCurrentPlayer(objectReference).playMove(clickedCell,objectReference);
+        e.target.innerText = gameLogic.getCurrentSymbol();
     }
     return {
         player1: player1,
@@ -41,7 +44,7 @@ function gameBoard(player1,player2) {
             parentContainer.appendChild(cell);
             cell.innerText = this.boardData[i];
 
-            cell.addEventListener('click', userClickListener);
+            cell.addEventListener('click', userClickListener.bind(this));
         }},
         handleWin: function () {
             console.log("Player "+gameLogic.getCurrentSymbol()+" has won!");
@@ -55,7 +58,7 @@ function gameBoard(player1,player2) {
     }
 }
 
-
+//this should work fine and not break without global code
 const gameLogic = (() => {
     //Not a factory function
     const winCombos = [
@@ -73,12 +76,12 @@ const gameLogic = (() => {
     const symbols = ["X", "O"];
     let currentPlayerIndex = 0;
     return {
-        checkIfEmpty: function (index) {
+        checkIfEmpty: function (index,board) {
             if (board.boardData[index] === "") {
                 return true;
             }
         },
-        checkIfWon: function(playerChar) {
+        checkIfWon: function(playerChar,board) {
             let occupiedIndexes = [];
             for (i=0; i<board.boardData.length; i++) {
                 if (board.boardData[i] == playerChar) {
@@ -96,7 +99,7 @@ const gameLogic = (() => {
             }
             return false;
         },
-        checkIfDraw: function () {
+        checkIfDraw: function (board) {
             if (board.boardData.includes("")) {
                 return false;
             }
@@ -104,7 +107,7 @@ const gameLogic = (() => {
         changePlayer: function () {
             currentPlayerIndex = (currentPlayerIndex + 1) % symbols.length;
         },
-        getCurrentPlayer: function () { // change this to either return just the index OOORRR have it accept 2 players as inputs and return only 1 
+        getCurrentPlayer: function (board) { // change this to either return just the index OOORRR have it accept 2 players as inputs and return only 1 
             return currentPlayerIndex === 0 ? board.player1 : board.player2;
         },
         getCurrentSymbol: function () {
@@ -115,16 +118,17 @@ const gameLogic = (() => {
 
 })();
 
-const player = () => {
+const player = (symbol) => {
     //player factory function
     return {
-        playMove: function (index) {
-            board.changeBoardData(index, gameLogic.getCurrentSymbol());
-            won = gameLogic.checkIfWon(gameLogic.getCurrentSymbol());
+        symbol: symbol,
+        playMove: function (index,board) {
+            board.changeBoardData(index, symbol);
+            let won = gameLogic.checkIfWon(symbol,board);
             if (won) {
                 board.handleWin();
             }
-            gameLogic.checkIfDraw();
+            gameLogic.checkIfDraw(board);
             //might need to put something here if someone wins 
             gameLogic.changePlayer();
         }
@@ -132,7 +136,9 @@ const player = () => {
 }
 
 //board instance created
-const board = gameBoard(player(), player());
+const player1 = player("X");
+const player2 = player("O");
+const board = gameBoard(player1, player2);
 //board drawn and listeners started
 board.buildBoard();
 
@@ -140,4 +146,3 @@ board.buildBoard();
 //board.startNewGame(player1, player2)
 
 //remove list in currentplayerindex 
-console.log(board.player1);
