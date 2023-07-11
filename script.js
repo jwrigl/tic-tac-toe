@@ -37,7 +37,7 @@ function gameBoard(player1,player2) {
             parentContainer.appendChild(cell);
             cell.innerText = this.boardData[i];
 
-            cell.addEventListener('click', userClickListener.bind(this));
+            cell.addEventListener('click', userClickListener);
         }},
         handleWin: function () {
             console.log("Player "+gameLogic.getCurrentSymbol()+" has won!");
@@ -51,8 +51,6 @@ function gameBoard(player1,player2) {
     }
     const userClickListener = (e) => {
         let clickedCell = Number(e.target.id);
-        console.log(gameBoardObject);
-        console.log(gameLogic.getCurrentPlayer(gameBoardObject))
         gameLogic.getCurrentPlayer(gameBoardObject).playMove(clickedCell,gameBoardObject);
         e.target.innerText = gameLogic.getCurrentSymbol();
     }
