@@ -22,13 +22,8 @@ function gameBoard(player1,player2) {
             this.boardData = ["", "", "", "", "", "", "", "", ""]
         },
         changeBoardData: function (index, value) {
-            console.log(index)
-            if(value === "X" || value === "O") {
-                this.boardData[index] = value;
-        }
-        else {
-            console.log("Invalid symbol");
-        }},
+            this.boardData[index] = value;
+        },
         buildBoard: function () {
             for (let i = 0; i < this.boardData.length; i++) {
             let cell = document.createElement('div');
@@ -39,20 +34,20 @@ function gameBoard(player1,player2) {
 
             cell.addEventListener('click', userClickListener);
         }},
-        handleWin: function () {
-            console.log("Player "+gameLogic.getCurrentSymbol()+" has won!");
+        handleWin: function (symbol) {
+            console.log("Player "+symbol+" has won!");
             const cells = document.querySelectorAll('.cell');
             cells.forEach(cell => {
                 cell.removeEventListener('click', userClickListener);
             })
             const winMsgContainer = document.querySelector('#winMsgContainer');
-            winMsgContainer.innerText = "Player " + gameLogic.getCurrentSymbol() + " has won!";
+            winMsgContainer.innerText = "Player " + symbol + " has won!";
         }
     }
     const userClickListener = (e) => {
         let clickedCell = Number(e.target.id);
+        e.target.innerText = gameLogic.getCurrentSymbol(gameBoardObject);
         gameLogic.getCurrentPlayer(gameBoardObject).playMove(clickedCell,gameBoardObject);
-        e.target.innerText = gameLogic.getCurrentSymbol();
     }
     return gameBoardObject;
 }
@@ -72,7 +67,6 @@ const gameLogic = (() => {
         [1, 5, 9], // Diagonals
         [3, 5, 7]
     ];
-    const symbols = ["X", "O"];
     let currentPlayerIndex = 0;
     return {
         checkIfEmpty: function (index,board) {
@@ -87,13 +81,13 @@ const gameLogic = (() => {
                 if (board.boardData[i] == playerChar) {
                     occupiedIndexes.push(i+1);
                 }
-            console.log(occupiedIndexes);
     
             }
             for (let i = 0; i < winCombos.length; i++) {
                 const [a, b, c] = winCombos[i];
                 if (occupiedIndexes.includes(a) && occupiedIndexes.includes(b) 
                     && occupiedIndexes.includes(c)) {
+                    console.log("playerchar"+playerChar);
                     return true;
                 }
             }
@@ -105,13 +99,18 @@ const gameLogic = (() => {
             }
         },
         changePlayer: function () {
-            currentPlayerIndex = (currentPlayerIndex + 1) % symbols.length;
+            if (currentPlayerIndex === 1) {
+                currentPlayerIndex = 0;
+            }
+            else {
+                currentPlayerIndex = 1;
+            }
         },
-        getCurrentPlayer: function (board) { // change this to either return just the index OOORRR have it accept 2 players as inputs and return only 1 
+        getCurrentPlayer: function (board) {
             return currentPlayerIndex === 0 ? board.player1 : board.player2;
         },
-        getCurrentSymbol: function () {
-            return symbols[currentPlayerIndex];
+        getCurrentSymbol: function (board) {
+            return this.getCurrentPlayer(board).symbol;
         },
     }
 
@@ -123,13 +122,14 @@ const player = (symbol) => {
     return {
         symbol: symbol,
         playMove: function (index,board) {
+            console.log("player symbol: "+symbol);
             if (!gameLogic.checkIfEmpty(index,board)) {
                 return;
             }
             board.changeBoardData(index, symbol);
             let won = gameLogic.checkIfWon(symbol,board);
             if (won) {
-                board.handleWin();
+                board.handleWin(symbol);
             }
             gameLogic.checkIfDraw(board);
             //might need to put something here if someone wins 
