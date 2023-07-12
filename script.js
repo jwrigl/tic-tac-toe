@@ -159,26 +159,25 @@ const player = (symbol) => {
 const landingPage = (() => {
     return {
         buildLandingPage: function () {
-            const landingPageContainer = document.createElement('div');
-            landingPageContainer.id = 'landingPageContainer';
-            document.body.appendChild(landingPageContainer);
+            function createElementWithId(element,identifier,text,parent,append) {
+                //element and newElement may be confusing
+                const newElement = document.createElement(element);
+                newElement.id = identifier;
+                newElement.innerText = text;
+                if (append) {
+                    parent.appendChild(newElement);
+                }
+                return newElement;
+              }
+            const landingPageContainer = createElementWithId("div",'landingPageContainer', '', document.body,true);
 
-            const landingPage = document.createElement('div');
-            landingPage.id = ('landingPage');
-            landingPageContainer.appendChild(landingPage);
-            
-            const landingPageTitle = document.createElement('div');
-            landingPageTitle.id = 'landingPageTitle';
-            landingPageTitle.innerText = "Tic Tac Toe";
-            landingPage.appendChild(landingPageTitle);
+            const landingPage = createElementWithId("div",'landingPage', '', landingPageContainer,true);
 
-            const nameInput = document.createElement('input');
-            nameInput.id = 'nameInput';
-            landingPage.appendChild(nameInput);
+            const landingPageTitle = createElementWithId('div','landingPageTitle', 'Tic tac toe', landingPage,true);
 
-            const startButton = document.createElement('button');
-            startButton.id = 'startButton';
-            startButton.innerText = 'Start';
+            const nameInput = createElementWithId("input",'nameInput', '', landingPage,true);
+
+            const startButton = createElementWithId('button','startButton', 'Start', landingPage,false);
             startButton.onclick = this.loadGame;
             landingPage.appendChild(startButton);
         },
