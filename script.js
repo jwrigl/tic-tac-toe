@@ -154,9 +154,14 @@ const landingPage = (() => {
             document.body.appendChild(landingPageContainer);
 
             const landingPage = document.createElement('div');
-            landingPage.classList.add('landingPage');
+            landingPage.id = ('landingPage');
             landingPageContainer.appendChild(landingPage);
             
+            const landingPageTitle = document.createElement('div');
+            landingPageTitle.id = 'landingPageTitle';
+            landingPageTitle.innerText = "Tic Tac Toe";
+            landingPage.appendChild(landingPageTitle);
+
             const startButton = document.createElement('button');
             startButton.id = 'startButton';
             startButton.innerText = 'Start';

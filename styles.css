@@ -7,6 +7,11 @@ body {
     width: 100vw;
 }
 
+#landingPageTitle {
+    font-size: 5rem;
+}
+
+
 /*Get a nice slender font for the text to compliment the borders*/
 .cell {
     border-top: none;
