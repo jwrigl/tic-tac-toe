@@ -6,15 +6,21 @@ body {
     width: 100vw;
 }
 .cell {
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+
     display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: 200px;
     height: 200px;
-    border: 1px solid black;
+
     text-align: center;
     font-size: 5rem;
     font-weight: bold;
-    align-items: center;
-    justify-content: center;
 }
 
 #boardContainer {
@@ -24,4 +30,23 @@ body {
     align-items: center;
     justify-content: center;
 
+}
+
+/*Creation of tic-tac-toe pattern*/
+
+
+[id="3"], [id="5"] {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+[id="1"], [id="7"] {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+[id="4"] {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
 }
