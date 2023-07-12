@@ -1,13 +1,3 @@
-/*KEY PROCESSES IN TIC TAC TOE
-Player makes a move:
-Is the square empty?
-What symbol do they have?
-Has the game been won?
-Has the game been drawn?
-Switch player
-repeat
-*/
-
 function gameBoard(player1,player2) {
     //gameboard factory function
     //'this' refers to the window object in this function
@@ -170,10 +160,10 @@ const landingPage = (() => {
             const startButton = document.createElement('button');
             startButton.id = 'startButton';
             startButton.innerText = 'Start';
-            startButton.onclick = this.destroyLandingPage;
+            startButton.onclick = this.loadGame;
             landingPage.appendChild(startButton);
         },
-        destroyLandingPage: function () {
+        loadGame: function () {
             document.body.removeChild(document.getElementById('landingPageContainer'));
             board.buildBoard();
         }
