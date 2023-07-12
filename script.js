@@ -20,11 +20,19 @@ function gameBoard(player1,player2) {
         changeBoardData: function (index, value) {
             this.boardData[index] = value;
         },
-        buildBoard: function () {
+        buildBoard: function (playerName) {
+            const headerContainer = document.createElement('div');
+            headerContainer.id = 'headerContainer';
+            document.body.appendChild(headerContainer);
+
+            const playerNameDisplay = document.createElement('div');
+            playerNameDisplay.id = 'playerNameDisplay';
+            playerNameDisplay.innerText = playerName;
+            headerContainer.appendChild(playerNameDisplay);
+
             const parentContainer = document.createElement('div');
             parentContainer.id = 'boardContainer';
             document.body.appendChild(parentContainer);
-
 
             for (let i = 0; i < this.boardData.length; i++) {
             let cell = document.createElement('div');
@@ -164,6 +172,10 @@ const landingPage = (() => {
             landingPageTitle.innerText = "Tic Tac Toe";
             landingPage.appendChild(landingPageTitle);
 
+            const nameInput = document.createElement('input');
+            nameInput.id = 'nameInput';
+            landingPage.appendChild(nameInput);
+
             const startButton = document.createElement('button');
             startButton.id = 'startButton';
             startButton.innerText = 'Start';
@@ -171,8 +183,10 @@ const landingPage = (() => {
             landingPage.appendChild(startButton);
         },
         loadGame: function () {
+            const playerName = document.getElementById('nameInput').value;
             document.body.removeChild(document.getElementById('landingPageContainer'));
-            board.buildBoard();
+            board.buildBoard(playerName);
+
         }
     }
 })();
