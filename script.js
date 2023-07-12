@@ -14,6 +14,12 @@ function gameBoard(player1,player2) {
     const parentContainer = document.querySelector('#boardContainer');
     //the function output is in this variable to take advantage of scope to pass the gameBoard object to 
     //the userclicklistener
+    const removeEventListeners = () => {
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            cell.removeEventListener('click', userClickListener);
+        })
+    }
     const gameBoardObject = {
         player1: player1,
         player2: player2,
@@ -35,13 +41,14 @@ function gameBoard(player1,player2) {
             cell.addEventListener('click', userClickListener);
         }},
         handleWin: function (symbol) {
-            console.log("Player "+symbol+" has won!");
-            const cells = document.querySelectorAll('.cell');
-            cells.forEach(cell => {
-                cell.removeEventListener('click', userClickListener);
-            })
+            removeEventListeners();
             const winMsgContainer = document.querySelector('#winMsgContainer');
             winMsgContainer.innerText = "Player " + symbol + " has won!";
+        },
+        handleDraw: function () {
+            removeEventListeners();
+            const winMsgContainer = document.querySelector('#winMsgContainer');
+            winMsgContainer.innerText = "It's a draw!";
         }
     }
     const userClickListener = (e) => {
@@ -74,7 +81,6 @@ const gameLogic = (() => {
     return {
         checkIfEmpty: function (index,board) {
             if (board.boardData[index] === "") {
-                console.log("empty")
                 return true;
             }
             return false;
@@ -100,6 +106,9 @@ const gameLogic = (() => {
         checkIfDraw: function (board) {
             if (board.boardData.includes("")) {
                 return false;
+            }
+            else {
+                return true;
             }
         },
         changePlayer: function () {
@@ -133,7 +142,10 @@ const player = (symbol) => {
             if (won) {
                 board.handleWin(symbol);
             }
-            gameLogic.checkIfDraw(board);
+            let draw = gameLogic.checkIfDraw(board);
+            if (draw) {
+                board.handleDraw();
+            }
             //might need to put something here if someone wins 
             gameLogic.changePlayer();
         }
