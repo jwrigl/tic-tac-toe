@@ -159,10 +159,23 @@ const player = (symbol) => {
 const landingPage = (() => {
     return {
         buildLandingPage: function () {
-            const landingPageContainer = document.querySelector('#landingPageContainer');
+            const landingPageContainer = document.createElement('div');
+            landingPageContainer.id = 'landingPageContainer';
+            document.body.appendChild(landingPageContainer);
+
             const landingPage = document.createElement('div');
             landingPage.classList.add('landingPage');
             landingPageContainer.appendChild(landingPage);
+            
+            const startButton = document.createElement('button');
+            startButton.id = 'startButton';
+            startButton.innerText = 'Start';
+            startButton.onclick = this.destroyLandingPage;
+            landingPage.appendChild(startButton);
+        },
+        destroyLandingPage: function () {
+            document.body.removeChild(document.getElementById('landingPageContainer'));
+            board.buildBoard();
         }
     }
 })();
@@ -176,6 +189,7 @@ function initialize() {
     return gameBoard(player1, player2);
 };
 const board = initialize();
+landingPage.buildLandingPage();
 
 
 //pass players into start function and save them with  this.player1 = player1 in gameBoard
