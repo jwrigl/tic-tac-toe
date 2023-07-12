@@ -11,7 +11,9 @@ repeat
 function gameBoard(player1,player2) {
     //gameboard factory function
     //'this' refers to the window object in this function
-    const parentContainer = document.querySelector('#boardContainer');
+    const parentContainer = document.createElement('div');
+    parentContainer.id = 'boardContainer';
+    document.body.appendChild(parentContainer);
     //the function output is in this variable to take advantage of scope to pass the gameBoard object to 
     //the userclicklistener
     const removeEventListeners = () => {
@@ -80,7 +82,7 @@ const gameLogic = (() => {
         [3, 5, 7]
     ];
     let currentPlayerIndex = 0;
-    return {
+    return {    
         checkIfEmpty: function (index,board) {
             if (board.boardData[index] === "") {
                 return true;
@@ -154,12 +156,27 @@ const player = (symbol) => {
     }
 }
 
+const landingPage = (() => {
+    return {
+        buildLandingPage: function () {
+            const landingPageContainer = document.querySelector('#landingPageContainer');
+            const landingPage = document.createElement('div');
+            landingPage.classList.add('landingPage');
+            landingPageContainer.appendChild(landingPage);
+        }
+    }
+})();
+
+
 //board instance created
-const player1 = player("X");
-const player2 = player("O");
-const board = gameBoard(player1, player2);
-//board drawn and listeners started
-board.buildBoard();
+function initialize() {
+    const player1 = player("X");
+    const player2 = player("O");
+    //board drawn and listeners started
+    return gameBoard(player1, player2);
+};
+const board = initialize();
+
 
 //pass players into start function and save them with  this.player1 = player1 in gameBoard
 //board.startNewGame(player1, player2)
