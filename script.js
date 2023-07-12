@@ -31,28 +31,11 @@ function gameBoard(player1,player2) {
             this.boardData[index] = value;
         },
         buildBoard: function () {
-            const boardSides = [
-                [0, 1, 2], //top row
-                [6, 7, 8], //bottom row
-                [0, 3, 6], //left column
-                [2, 5, 8], //right column
-            ]
 
             for (let i = 0; i < this.boardData.length; i++) {
             let cell = document.createElement('div');
             cell.classList.add('cell');
             cell.id = i;
-
-            /*if ([1, 2, 6, 8].includes(i)) {
-                // Corner cells
-                cell.classList.add('cell', 'corner-cell');
-            } else if ([1, 3, 5, 7].includes(i)) {
-                // Edge cells
-                cell.classList.add('cell', 'edge-cell');
-            } else {
-                // Middle cell
-                cell.classList.add('cell', 'middle-cell');
-            }*/
 
             parentContainer.appendChild(cell);
             cell.innerText = this.boardData[i];
