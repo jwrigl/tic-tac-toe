@@ -1,3 +1,10 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
 .cell {
     display: flex;
     width: 200px;
@@ -12,9 +19,9 @@
 
 #boardContainer {
     display: grid;
-    margin-top: 20vh;
     grid-template-columns: repeat(3, 200px);
     grid-template-rows: repeat(3, 200px);
     align-items: center;
     justify-content: center;
+
 }
