@@ -1,9 +1,7 @@
 function gameBoard(player1,player2) {
     //gameboard factory function
     //'this' refers to the window object in this function
-    const parentContainer = document.createElement('div');
-    parentContainer.id = 'boardContainer';
-    document.body.appendChild(parentContainer);
+
     //the function output is in this variable to take advantage of scope to pass the gameBoard object to 
     //the userclicklistener
     const removeEventListeners = () => {
@@ -23,6 +21,10 @@ function gameBoard(player1,player2) {
             this.boardData[index] = value;
         },
         buildBoard: function () {
+            const parentContainer = document.createElement('div');
+            parentContainer.id = 'boardContainer';
+            document.body.appendChild(parentContainer);
+
 
             for (let i = 0; i < this.boardData.length; i++) {
             let cell = document.createElement('div');
